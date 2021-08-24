@@ -5,12 +5,14 @@ const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
   const handleDelete = (userId) => {
-    setUsers(() => {
-      
-    })
+    setUsers((state) => {
+      return state.filter(({ _id }) => _id !== userId);
+    });
   };
 
   const renderPhrase = (number) => {
+    if (!number) return 'Никто с тобой не тусонет';
+
     const tail = +String(number).slice(-1);
     const lastCouple = +String(number).slice(-2);
 
@@ -20,57 +22,66 @@ const Users = () => {
         : 'человека';
 
     return `${number} ${word} ${
-      tail === 1 ? 'тусанет' : 'тусанут'
+      tail === 1 ? 'тусонет' : 'тусонут'
     } с тобой сегодня`;
   };
 
-  const rows = users.map((row) => {
-    return (
-      <tr key={row._id}>
-        <td>{row.name}</td>
-        <td>
-          {row.qualities.map((quality, index) => (
-            <span
-              key={row.qualities.length - index}
-              className={`badge bg-${quality.color} me-2`}
+  const columnTitles = [
+    'Имя',
+    'Качества',
+    'Профессия',
+    'Встретился, раз',
+    'Оценка',
+    '',
+  ];
+
+  const tableHead = columnTitles.map((title, i) => (
+    <th key={columnTitles.length - i} scope="col">
+      {title}
+    </th>
+  ));
+
+  const rows = users.map(
+    ({ _id, name, profession, qualities, completedMeetings, rate }) => (
+        <tr key={_id}>
+          <td>{name}</td>
+          <td>
+            {qualities.map(({ _id, name, color }) => (
+              <span key={_id} className={`badge bg-${color} me-2`}>
+                {name}
+              </span>
+            ))}
+          </td>
+          <td>{profession.name}</td>
+          <td>{completedMeetings}</td>
+          <td>{rate}/5</td>
+          <td>
+            <button
+              className="btn btn-danger"
+              onClick={() => handleDelete(_id)}
             >
-              {quality.name}
-            </span>
-          ))}
-        </td>
-        <td>{row.profession.name}</td>
-        <td>{row.completedMeetings}</td>
-        <td>{row.rate}/5</td>
-        <td>
-          <button
-            className="btn btn-danger"
-            onClick={() => handleDelete(row._id)}
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    );
-  });
+              Delete
+            </button>
+          </td>
+        </tr>
+      )
+  );
 
   return (
     <div className="container mt-5">
       <h1 className="mb-4">
-        <span className="badge bg-primary">{renderPhrase(users.length)}</span>
+        <span className={`badge ${users.length ? 'bg-primary' : 'bg-danger'}`}>
+          {renderPhrase(users.length)}
+        </span>
       </h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">Имя</th>
-            <th scope="col">Качества</th>
-            <th scope="col">Профессия</th>
-            <th scope="col">Встретился, раз</th>
-            <th scope="col">Оценка</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
+      {(users.length || null) && (
+        <table className="table">
+          <thead>
+            <tr>{tableHead}</tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      )}
     </div>
   );
 };
