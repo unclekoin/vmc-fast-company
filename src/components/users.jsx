@@ -11,7 +11,7 @@ const Users = () => {
   };
 
   const renderPhrase = (number) => {
-    if (!number) return 'Никто с тобой не тусонет';
+    if (!number) return 'Никто с тобой не тусанет';
 
     const tail = +String(number).slice(-1);
     const lastCouple = +String(number).slice(-2);
@@ -22,7 +22,7 @@ const Users = () => {
         : 'человека';
 
     return `${number} ${word} ${
-      tail === 1 ? 'тусонет' : 'тусонут'
+      tail === 1 ? 'тусанет' : 'тусанут'
     } с тобой сегодня`;
   };
 
