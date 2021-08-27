@@ -5,9 +5,9 @@ const BookMark = ({ onToggeleBookMark, id, status }) => {
   classes = status ? classes + '-star-fill' : classes;
 
   return (
-    <button onClick={() => onToggeleBookMark(id)} type="button" className="btn btn-bookmark">
+    <span onClick={() => onToggeleBookMark(id)} className="bookmark-wrapper">
       <i className={classes} />
-    </button>
+    </span>
   );
 };
 

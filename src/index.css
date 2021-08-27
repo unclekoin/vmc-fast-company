@@ -1,7 +1,10 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 
-.btn.btn-bookmark {
+.bookmark-wrapper {
   font-size: 1.3rem;
   color: #dc3545;
-  line-height: 0;
+}
+
+.bookmark-wrapper .bi {
+  cursor: pointer;
 }

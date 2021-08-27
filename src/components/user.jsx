@@ -24,7 +24,7 @@ const User = ({
       <td>{profession.name}</td>
       <td>{completedMeetings}</td>
       <td>{rate}/5</td>
-      <td>
+      <td className="text-center">
         <BookMark onToggeleBookMark={onToggeleBookMark} id={_id} status={status} />
       </td>
       <td>
