@@ -44,7 +44,7 @@ const User = ({
 User.propTypes = {
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  qualities: PropTypes.array,
+  qualities: PropTypes.array.isRequired,
   profession: PropTypes.object.isRequired,
   completedMeetings: PropTypes.number.isRequired,
   rate: PropTypes.number.isRequired,
