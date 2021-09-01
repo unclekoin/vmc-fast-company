@@ -17,10 +17,6 @@ const App = () => {
     setUsers(newUsers);
   };
 
-  // const splitIntoPages = (currentPage) => {
-  //   setUsers(users.slice(PAGE_SIZE * currentPage - PAGE_SIZE, PAGE_SIZE * currentPage))
-  // }
-
   return (
     <div className="container mt-5">
       <SearchStatus length={users.length} />
