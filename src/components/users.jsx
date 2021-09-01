@@ -14,9 +14,9 @@ const Users = ({ users: allUsers, onDelete, onToggeleBookMark }) => {
     setCurrentPage(pageIndex);
   };
 
-  const user = paginate(allUsers, currentPage, pageSize);
+  const users = paginate(allUsers, currentPage, pageSize);
 
-  const rows = user.map((user) => (
+  const rows = users.map((user) => (
     <User
       key={user._id}
       {...user}
