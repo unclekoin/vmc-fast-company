@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
 const TableHead = () => {
   const columnTitles = [
-    'Имя',
-    'Качества',
-    'Профессия',
-    'Встретился, раз',
-    'Оценка',
-    'Избранное',
-    '',
+    "Имя",
+    "Качества",
+    "Профессия",
+    "Встретился, раз",
+    "Оценка",
+    "Избранное",
+    ""
   ];
 
   const tableHead = columnTitles.map((title, i) => (

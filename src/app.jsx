@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import api from './api';
-import Users from './components/users';
-import SearchStatus from './components/search-status';
+import React, { useState } from "react";
+import api from "./api";
+import Users from "./components/users";
+import SearchStatus from "./components/search-status";
 
 const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
@@ -16,6 +16,10 @@ const App = () => {
     newUsers[index].status = !newUsers[index].status;
     setUsers(newUsers);
   };
+
+  // const splitIntoPages = (currentPage) => {
+  //   setUsers(users.slice(PAGE_SIZE * currentPage - PAGE_SIZE, PAGE_SIZE * currentPage))
+  // }
 
   return (
     <div className="container mt-5">

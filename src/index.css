@@ -8,3 +8,7 @@
 .bookmark-wrapper .bi {
   cursor: pointer;
 }
+
+span.page-link {
+  cursor: pointer;
+}

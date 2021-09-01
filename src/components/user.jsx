@@ -1,6 +1,7 @@
-import React from 'react';
-import BookMark from './bookmark';
-import Quality from './quality';
+import React from "react";
+import BookMark from "./bookmark";
+import Quality from "./quality";
+import PropTypes from "prop-types";
 
 const User = ({
   _id,
@@ -25,7 +26,11 @@ const User = ({
       <td>{completedMeetings}</td>
       <td>{rate}/5</td>
       <td className="text-center">
-        <BookMark onToggeleBookMark={onToggeleBookMark} id={_id} status={status} />
+        <BookMark
+          onToggeleBookMark={onToggeleBookMark}
+          id={_id}
+          status={status}
+        />
       </td>
       <td>
         <button className="btn btn-danger" onClick={() => onDelete(_id)}>
@@ -34,6 +39,18 @@ const User = ({
       </td>
     </tr>
   );
+};
+
+User.propTypes = {
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  qualities: PropTypes.array,
+  profession: PropTypes.object.isRequired,
+  completedMeetings: PropTypes.number.isRequired,
+  rate: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onToggeleBookMark: PropTypes.func.isRequired,
+  status: PropTypes.bool
 };
 
 export default User;
