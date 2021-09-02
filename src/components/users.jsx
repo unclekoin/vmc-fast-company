@@ -16,6 +16,10 @@ const Users = ({ users: allUsers, onDelete, onToggeleBookMark }) => {
 
   const users = paginate(allUsers, currentPage, pageSize);
 
+  if (!users.length && currentPage) {
+    handlePageChange(currentPage - 1);
+  }
+
   const rows = users.map((user) => (
     <User
       key={user._id}
