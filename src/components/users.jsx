@@ -18,6 +18,10 @@ const Users = ({ users: allUsers, onDelete, onToggeleBookMark }) => {
     api.professions.fetchAll().then((data) => setProfessions(data));
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedProf]);
+
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
   };
@@ -27,14 +31,14 @@ const Users = ({ users: allUsers, onDelete, onToggeleBookMark }) => {
   };
 
   const filtredUsers = selectedProf
-    ? allUsers.filter((user) => user.profession === selectedProf)
+    ? allUsers.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
     : allUsers;
 
   const length = filtredUsers.length;
 
   const users = paginate(filtredUsers, currentPage, pageSize);
 
-  const clearFilter = () => setSelectedProf();
+  const clearFilter = () => { setSelectedProf(); };
 
   if (!users.length && currentPage) {
     handlePageChange(currentPage - 1);

@@ -6,7 +6,7 @@ const BookMark = ({ onToggeleBookMark, id, status }) => {
   classes = status ? classes + "-star-fill" : classes;
 
   return (
-    <span onClick={() => onToggeleBookMark(id)} className="bookmark-wrapper">
+    <span onClick={() => onToggeleBookMark(id)} className="fs-4 text-danger" role="button">
       <i className={classes} />
     </span>
   );
