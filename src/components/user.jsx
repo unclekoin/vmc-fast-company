@@ -24,7 +24,7 @@ const User = ({
       </td>
       <td>{profession.name}</td>
       <td>{completedMeetings}</td>
-      <td>{rate}/5</td>
+      <td>{rate} / 5</td>
       <td className="text-center">
         <BookMark
           onToggeleBookMark={onToggeleBookMark}
