@@ -7,8 +7,9 @@ import GroupList from "./group-list";
 import { paginate } from "../utils/paginate";
 import SearchStatus from "./search-status";
 import _ from "lodash";
+import Spinner from "./spinner";
 
-const Users = () => {
+const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
@@ -72,7 +73,7 @@ const Users = () => {
     }
 
     return (
-      <div className="container mt-5">
+      <div>
         <SearchStatus length={length} />
         <div className="d-flex align-items-start">
           {professions && (
@@ -110,13 +111,16 @@ const Users = () => {
       </div>
     );
   }
-  return <div className="container mt-5">Loading...</div>;
+  return (
+    <Spinner />
+  );
 };
 
-Users.propTypes = {
+UserList.propTypes = {
   users: PropTypes.array,
   onDelete: PropTypes.func,
-  onToggeleBookMark: PropTypes.func
+  onToggeleBookMark: PropTypes.func,
+  getData: PropTypes.func
 };
 
-export default Users;
+export default UserList;

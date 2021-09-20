@@ -5,6 +5,7 @@ import TableBody from "./table-body";
 import BookMark from "./bookmark";
 import QualitiesList from "./qualities-list";
 import Table from "./table";
+import Name from "./name";
 
 const UsersTable = ({
   users,
@@ -14,7 +15,12 @@ const UsersTable = ({
   selectedSort
 }) => {
   const columns = {
-    name: { path: "name", name: "Имя" },
+    // name: { path: "name", name: "Имя" },
+    name: {
+      name: "Имя",
+      path: "name",
+      component: (user) => <Name name={user.name} id={user._id} />
+    },
     qualities: {
       name: "Качества",
       component: (user) => <QualitiesList qualities={user.qualities} />
