@@ -23,7 +23,7 @@ const UserCard = ({ user }) => {
         <div className="mb-4">
           <QualitiesList qualities={qualities} />
         </div>
-        <Link to="/users" className="btn btn-primary">
+        <Link to="/vmc-fast-company/users" className="btn btn-primary">
           Все пользователи
         </Link>
       </div>

@@ -5,17 +5,17 @@ const NavBar = () => {
   return (
     <ul className="nav">
       <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/">
+        <Link className="nav-link active" aria-current="page" to="/vmc-fast-company/">
           Main
         </Link>
       </li>
       <li className="nav-nav-item">
-        <Link className="nav-link" to="/users">
+        <Link className="nav-link" to="/vmc-fast-company/users">
           Users
         </Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/login">
+        <Link className="nav-link" to="/vmc-fast-company/login">
           Login
         </Link>
       </li>
