@@ -23,7 +23,7 @@
     "eject": "react-scripts eject",
     "format": "npx prettier -write .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b fast-company -d build"
+    "deploy": "gh-pages -b app -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,5 +51,5 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.25.1"
   },
-  "homepage": "https://unclekoin.github.io/vmc-fast-company"
+  "homepage": "https://unclekoin.github.io/"
 }

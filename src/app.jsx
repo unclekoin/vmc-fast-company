@@ -10,9 +10,9 @@ const App = () => {
     <div className="container mt-5">
       <NavBar />
       <Switch>
-        <Route exact path="/vmc-fast-company/"><Main /></Route>
-        <Route path="/vmc-fast-company/users/:userId?"><Users /></Route>
-        <Route path="/vmc-fast-company/login"><Login /></Route>
+        <Route exact path="/"><Main /></Route>
+        <Route path="/users/:userId?"><Users /></Route>
+        <Route path="/login"><Login /></Route>
       </Switch>
     </div>
   );
