@@ -8,6 +8,7 @@ import { paginate } from "../utils/paginate";
 import SearchStatus from "./search-status";
 import _ from "lodash";
 import Spinner from "./spinner";
+import SearchPanel from "./search-panel";
 
 const UserList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,10 +18,15 @@ const UserList = () => {
   const pageSize = 8;
 
   const [users, setUsers] = useState();
+  const [userSearch, setUserSearch] = useState("");
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
   }, []);
+
+  useEffect(() => {
+    if (userSearch) clearFilter();
+  }, [userSearch]);
 
   const handleDelete = (userId) => {
     setUsers((state) => state.filter(({ _id }) => _id !== userId));
@@ -43,6 +49,7 @@ const UserList = () => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
+    setUserSearch("");
   };
 
   const handlePageChange = (pageIndex) => {
@@ -53,10 +60,25 @@ const UserList = () => {
     setSortBy(item);
   };
 
+  const handleSearch = ({ target }) => {
+    setUserSearch(target.value);
+  };
+
+  const clearFilter = () => {
+    setSelectedProf();
+  };
+
   if (users) {
     const filtredUsers = selectedProf
-      ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
-      : users;
+      ? users.filter(
+        (user) =>
+          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+      )
+      : userSearch
+        ? users.filter((user) =>
+          user.name.toLowerCase().includes(userSearch.toLowerCase())
+        )
+        : users;
 
     const length = filtredUsers.length;
 
@@ -64,30 +86,27 @@ const UserList = () => {
 
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
-    const clearFilter = () => {
-      setSelectedProf();
-    };
-
     if (!usersCrop.length && currentPage) {
       handlePageChange(currentPage - 1);
     }
 
     return (
-      <div>
-        <SearchStatus length={length} />
-        <div className="d-flex align-items-start">
-          {professions && (
-            <div className="d-flex flex-column flex-shrink-0 pe-4">
-              <GroupList
-                items={professions}
-                selectedItem={selectedProf}
-                onItemSelect={handleProfessionSelect}
-              />
-              <button className="btn btn-secondary mt-3" onClick={clearFilter}>
-                Отобразить всех
-              </button>
-            </div>
-          )}
+      <div className="d-flex align-items-start">
+        {professions && (
+          <div className="d-flex flex-column flex-shrink-0 pe-4">
+            <GroupList
+              items={professions}
+              selectedItem={selectedProf}
+              onItemSelect={handleProfessionSelect}
+            />
+            <button className="btn btn-secondary mt-3" onClick={clearFilter}>
+              Отобразить всех
+            </button>
+          </div>
+        )}
+        <div>
+          <SearchStatus length={length} />
+          <SearchPanel value={userSearch} onChange={handleSearch} />
           <div className="d-flex flex-column">
             {!!length && (
               <UsersTable
@@ -111,9 +130,7 @@ const UserList = () => {
       </div>
     );
   }
-  return (
-    <Spinner />
-  );
+  return <Spinner />;
 };
 
 UserList.propTypes = {
