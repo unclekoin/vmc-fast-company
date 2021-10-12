@@ -8,7 +8,7 @@ import { paginate } from "../../../utils/paginate";
 import SearchStatus from "../../ui/search/search-status";
 import _ from "lodash";
 import Spinner from "../../common/spinner";
-import SearchPanel from "../../ui/search/search-panel";
+import SearchPanel from "../../common/search-panel";
 
 const UserListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
