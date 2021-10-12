@@ -1,15 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const RadioField = ({ options, name, onChange, value }) => {
+const RadioField = ({ label, options, name, onChange, value }) => {
   return (
-    <div>
-      <h1>Radio Field</h1>
+    <div className="mb-4">
+      <label className="form-label d-block">{label}</label>
+      {options.map((option) => (
+        <div
+          key={`${option.name}_${option.value}`}
+          className="form-check form-check-inline"
+        >
+          <input
+            className="form-check-input"
+            onChange={onChange}
+            type="radio"
+            name={name}
+            checked={option.value === value}
+            id={`${option.name}_${option.value}`}
+            value={option.value}
+          />
+          <label
+            className="form-check-label"
+            htmlFor={`${option.name}_${option.value}`}
+          >
+            {option.name}
+          </label>
+        </div>
+      ))}
     </div>
   );
 };
 
 RadioField.propTypes = {
+  label: PropTypes.string,
   options: PropTypes.array,
   name: PropTypes.string,
   onChange: PropTypes.func,

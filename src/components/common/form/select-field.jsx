@@ -14,11 +14,10 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
       </label>
       <select
         onChange={onChange}
+        value={value}
         className={`form-select${error ? " is-invalid" : ""}`}
         name="profession"
-        value={value}
         id="validationCustom04"
-        required
       >
         <option disabled value="">
           {defaultOption}
@@ -27,7 +26,7 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
           optionsArray.map((option) => (
             <option
               key={option._id}
-              selected={option.name === value}
+              value={option._id}
             >
               {option.name}
             </option>

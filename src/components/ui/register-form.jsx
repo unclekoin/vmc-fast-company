@@ -3,11 +3,12 @@ import api from "../../api/index";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/text-field";
 import SelectField from "../common/form/select-field";
+import RadioField from "../common/form/radio-field";
 
 const RegisterForm = () => {
   const [errors, setErrors] = useState({});
   const [professions, setProfessions] = useState();
-  const [data, setData] = useState({ email: "", password: "", profession: "" });
+  const [data, setData] = useState({ email: "", password: "", profession: "", gender: "male" });
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
@@ -91,6 +92,17 @@ const RegisterForm = () => {
         onChange={handleChange}
         value={data.profession}
         error={errors.profession}
+      />
+      <RadioField
+        label="Пол"
+        options={[
+          { name: "Мужской", value: "male" },
+          { name: "Женский", value: "female" },
+          { name: "Другое", value: "other" }
+        ]}
+        value={data.gender}
+        name="gender"
+        onChange={handleChange}
       />
       <button
         type="submit"
