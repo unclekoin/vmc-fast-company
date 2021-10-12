@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
+import api from "../../../api";
 import PropTypes from "prop-types";
-import UsersTable from "./users-table";
-import Pagination from "./pagination";
-import GroupList from "./group-list";
-import { paginate } from "../utils/paginate";
-import SearchStatus from "./search-status";
+import UsersTable from "../../ui/users-table";
+import Pagination from "../../common/pagination";
+import GroupList from "../../common/group-list";
+import { paginate } from "../../../utils/paginate";
+import SearchStatus from "../../ui/search/search-status";
 import _ from "lodash";
-import Spinner from "./spinner";
-import SearchPanel from "./search-panel";
+import Spinner from "../../common/spinner";
+import SearchPanel from "../../ui/search/search-panel";
 
-const UserList = () => {
+const UserListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
@@ -133,11 +133,11 @@ const UserList = () => {
   return <Spinner />;
 };
 
-UserList.propTypes = {
+UserListPage.propTypes = {
   users: PropTypes.array,
   onDelete: PropTypes.func,
   onToggeleBookMark: PropTypes.func,
   getData: PropTypes.func
 };
 
-export default UserList;
+export default UserListPage;

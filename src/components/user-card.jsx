@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import QualitiesList from "./qualities-list";
+import QualitiesList from "./ui/qualities/qualities-list";
 
 const UserCard = ({ user }) => {
   const { name, profession, rate, completedMeetings, qualities } = user;
