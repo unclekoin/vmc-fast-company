@@ -4,21 +4,37 @@ import { validator } from "../../utils/validator";
 import TextField from "../common/form/text-field";
 import SelectField from "../common/form/select-field";
 import RadioField from "../common/form/radio-field";
+import MultiSelectField from "../common/form/multi-selct-field";
+import CheckboxField from "../common/form/checkbox-field";
 
 const RegisterForm = () => {
-  const [errors, setErrors] = useState({});
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    profession: "",
+    gender: "male",
+    qualities: [],
+    licence: false
+  });
+  const [qualities, setQualities] = useState({});
   const [professions, setProfessions] = useState();
-  const [data, setData] = useState({ email: "", password: "", profession: "", gender: "male" });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
+    api.qualities.fetchAll().then((data) => setQualities(data));
+
+    return () => {
+      setProfessions();
+      setQualities({});
+    };
   }, []);
 
   useEffect(() => {
     validate();
   }, [data]);
 
-  const handleChange = ({ target }) => {
+  const handleChange = (target) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
@@ -49,6 +65,11 @@ const RegisterForm = () => {
     profession: {
       isRequired: {
         message: "Пoле выбора профессии обязателено для заполнения"
+      }
+    },
+    licence: {
+      isRequired: {
+        message: "Вы не можете использовать сервис без подтверждения лицензионного соглащения"
       }
     }
   };
@@ -87,7 +108,7 @@ const RegisterForm = () => {
       />
       <SelectField
         label="Выберите профессию"
-        defaultOption="Choose..."
+        defaultOption="Выбрать..."
         options={professions}
         onChange={handleChange}
         value={data.profession}
@@ -104,6 +125,21 @@ const RegisterForm = () => {
         name="gender"
         onChange={handleChange}
       />
+      <MultiSelectField
+        name="qualities"
+        label="Выберите качества"
+        defaultOption="Выбрать..."
+        options={qualities}
+        onChange={handleChange}
+      />
+      <CheckboxField
+        onChange={handleChange}
+        value={data.licence}
+        name="licence"
+        error={errors.licence}
+      >
+        Подтвердить <a className="text-decoration-none" href="/">лицензионное соглашение</a>
+      </CheckboxField>
       <button
         type="submit"
         className="btn btn-primary w-100 mx-auto"

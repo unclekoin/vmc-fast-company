@@ -7,13 +7,17 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
     setShowPassword((prevState) => !prevState);
   };
 
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value });
+  };
+
   return (
     <div className="mb-4">
       <label htmlFor={name}>{label}</label>
       <div className="input-group has-validation">
         <input
           className={`form-control${error ? " is-invalid" : ""}`}
-          onChange={onChange}
+          onChange={handleChange}
           type={showPassword ? "text" : type}
           id={name}
           name={name}

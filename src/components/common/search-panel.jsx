@@ -5,7 +5,7 @@ const SearchPanel = ({ value, onChange }) => {
   const input = useRef();
   useEffect(() => {
     input.current.focus();
-  });
+  }, []);
 
   return (
     <div className="input-group mb-3">

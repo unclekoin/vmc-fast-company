@@ -7,13 +7,17 @@ const SelectField = ({ label, value, onChange, defaultOption, options, error }) 
       ? Object.keys(options).map((key) => ({ _id: options[key]._id, name: options[key].name }))
       : options;
 
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value });
+  };
+
   return (
     <div className="mb-4">
       <label htmlFor="validationCustom04" className="form-label">
         {label}
       </label>
       <select
-        onChange={onChange}
+        onChange={handleChange}
         value={value}
         className={`form-select${error ? " is-invalid" : ""}`}
         name="profession"

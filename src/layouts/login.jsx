@@ -20,15 +20,15 @@ const Login = () => {
           ? <>
             <h3 className="mb-4 text-center">Register</h3>
             <RegisterForm />
-            <p>Already have account?
-              <a onClick={toggleFormType} role="button"> Sign In</a>
+            <p className="py-2">Уже есть аккаунт?
+              <a className="text-primary text-decoration-none" onClick={toggleFormType} role="button"> Войти</a>
             </p>
           </>
           : <>
             <h3 className="mb-4 text-center">Login</h3>
             <LoginForm />
-            <p>Dont have account?
-              <a onClick={toggleFormType} role="button"> Sign Up</a>
+            <p className="py-2">Еще нет аккаунта?
+              <a className="text-primary text-decoration-none" onClick={toggleFormType} role="button"> Зарегестрироваться</a>
             </p>
           </>}
       </div>
