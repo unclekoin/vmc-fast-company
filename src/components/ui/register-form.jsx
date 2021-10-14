@@ -115,7 +115,7 @@ const RegisterForm = () => {
         error={errors.profession}
       />
       <RadioField
-        label="Пол"
+        label="Выберите пол"
         options={[
           { name: "Мужской", value: "male" },
           { name: "Женский", value: "female" },

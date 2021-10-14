@@ -3,7 +3,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import PropTypes from "prop-types";
 
-const MultiSelectField = ({ label, name, options, defaultOption, onChange }) => {
+const MultiSelectField = ({ label, name, options, defaultOption, defaultValue, onChange }) => {
   const optionsArray =
     !Array.isArray(options) && typeof options === "object"
       ? Object.keys(options).map((key) => ({
@@ -24,6 +24,7 @@ const MultiSelectField = ({ label, name, options, defaultOption, onChange }) => 
       <Select
         name={name}
         onChange={handleChange}
+        defaultValue={defaultValue}
         placeholder={defaultOption}
         className="basic-multi-select"
         classNamePrefix="select"
@@ -41,6 +42,7 @@ MultiSelectField.propTypes = {
   label: PropTypes.string,
   options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   defaultOption: PropTypes.string,
+  defaultValue: PropTypes.array,
   onChange: PropTypes.func
 };
 

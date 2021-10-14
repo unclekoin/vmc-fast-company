@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import api from "../../../api";
 import { useParams } from "react-router-dom";
-import UserCard from "../../user-card";
+import api from "../../../api";
+import UserCard from "../../ui/user-card";
 import Spinner from "../../common/spinner";
 
 const UserPage = () => {

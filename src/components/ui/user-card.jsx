@@ -1,16 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import QualitiesList from "./ui/qualities/qualities-list";
+import QualitiesList from "./qualities/qualities-list";
 
 const UserCard = ({ user }) => {
-  const { name, profession, rate, completedMeetings, qualities } = user;
+  const { _id, name, profession, rate, completedMeetings, qualities } = user;
   return (
     <div className="card">
       <h5 className="card-header">
         Имя: <span className="fs-2">{name}</span>
       </h5>
       <div className="card-body">
+        <div className="mb-2">
+          <QualitiesList qualities={qualities} />
+        </div>
         <h5 className="card-title">
           Профессия: <span className="fs-2">{profession.name}</span>
         </h5>
@@ -20,11 +23,8 @@ const UserCard = ({ user }) => {
         <p className="card-text">
           Оценка: <span className="fs-3">{rate} / 5</span>
         </p>
-        <div className="mb-4">
-          <QualitiesList qualities={qualities} />
-        </div>
-        <Link to="/users" className="btn btn-primary">
-          Все пользователи
+        <Link to={`/users/${_id}/edit`} className="btn btn-primary">
+          Изменить
         </Link>
       </div>
     </div>

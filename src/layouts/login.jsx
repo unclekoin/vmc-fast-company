@@ -18,14 +18,14 @@ const Login = () => {
       <div className="col p-5">
         {formtype === "register"
           ? <>
-            <h3 className="mb-4 text-center">Register</h3>
+            <h3 className="mb-4 text-center">Регистрация</h3>
             <RegisterForm />
             <p className="py-2">Уже есть аккаунт?
               <a className="text-primary text-decoration-none" onClick={toggleFormType} role="button"> Войти</a>
             </p>
           </>
           : <>
-            <h3 className="mb-4 text-center">Login</h3>
+            <h3 className="mb-4 text-center">Войти в систему</h3>
             <LoginForm />
             <p className="py-2">Еще нет аккаунта?
               <a className="text-primary text-decoration-none" onClick={toggleFormType} role="button"> Зарегестрироваться</a>

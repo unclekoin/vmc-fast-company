@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Table, { TableHeader, TableBody } from "../common/table";
 import BookMark from "../common/bookmark";
 import Qualities from "./qualities";
-import Name from "../name";
+import Name from "./name";
 
 const UsersTable = ({
   users,

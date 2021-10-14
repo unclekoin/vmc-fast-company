@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { validator } from "../../utils/validator";
 import TextField from "../common/form/text-field";
+import { validator } from "../../utils/validator";
 import CheckboxField from "../common/form/checkbox-field";
 
 const LoginForm = () => {
@@ -21,7 +21,7 @@ const LoginForm = () => {
         message: "Электронная почта обязательна для заполнения"
       },
       isEmail: {
-        message: "Email введен не корректно"
+        message: "Электронная почта введена не корректно"
       }
     },
     password: {
