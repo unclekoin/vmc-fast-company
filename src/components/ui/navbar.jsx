@@ -3,23 +3,25 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <ul className="nav mb-4">
-      <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to="/">
-          Main
-        </Link>
-      </li>
-      <li className="nav-nav-item">
-        <Link className="nav-link" to="/users">
-          Users
-        </Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/login">
-          Login
-        </Link>
-      </li>
-    </ul>
+    <nav className="row gutters-sm py-3">
+      <ul className="nav">
+        <li className="nav-item">
+          <Link className="nav-link active" aria-current="page" to="/">
+            Главная
+          </Link>
+        </li>
+        <li className="nav-nav-item">
+          <Link className="nav-link" to="/users">
+            Пользователи
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/login">
+            Авторизация
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

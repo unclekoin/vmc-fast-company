@@ -7,7 +7,7 @@ import Login from "./layouts/login";
 
 const App = () => {
   return (
-    <div className="container mt-5">
+    <div className="container">
       <NavBar />
       <Switch>
         <Route exact path="/"><Main /></Route>

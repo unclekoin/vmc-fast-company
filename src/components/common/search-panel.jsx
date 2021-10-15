@@ -14,7 +14,7 @@ const SearchPanel = ({ value, onChange }) => {
         onChange={onChange}
         type="text"
         className="form-control"
-        placeholder="Search..."
+        placeholder="Найти..."
         value={value}
       />
     </div>
