@@ -12,7 +12,7 @@ const UserPage = () => {
     api.users.getById(userId).then((user) => setUser(user));
   }, []);
 
-  return <>{user ? <UserCard user={user} /> : <Spinner />}</>;
+  return <>{user ? <UserCard user={user}/> : <Spinner />}</>;
 };
 
 export default UserPage;

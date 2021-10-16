@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav className="row gutters-sm py-3">
+    <nav className="row gutters-sm p-3">
       <ul className="nav">
         <li className="nav-item">
           <Link className="nav-link active" aria-current="page" to="/">

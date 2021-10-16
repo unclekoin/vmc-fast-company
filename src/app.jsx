@@ -7,14 +7,22 @@ import Login from "./layouts/login";
 
 const App = () => {
   return (
-    <div className="container">
+    <>
       <NavBar />
-      <Switch>
-        <Route exact path="/"><Main /></Route>
-        <Route path="/users/:userId?/:edit?"><Users /></Route>
-        <Route path="/login/:type?"><Login /></Route>
-      </Switch>
-    </div>
+      <div className="container">
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/users/:userId?/:edit?">
+            <Users />
+          </Route>
+          <Route path="/login/:type?">
+            <Login />
+          </Route>
+        </Switch>
+      </div>
+    </>
   );
 };
 
