@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import api from "../../api/";
 import { validator } from "../../utils/validator";
 import TextAreaField from "../common/form/text-area-field";
 import SelectField from "../common/form/select-field";
 
-const CommentForm = ({ id }) => {
+const CommentForm = ({ id, users, add }) => {
   const [data, setData] = useState({ comment: "", user: "" });
-  const [users, setUsers] = useState();
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    api.users.fetchAll().then((data) => setUsers(data));
-  }, []);
 
   useEffect(() => {
     validate();
@@ -60,8 +54,7 @@ const CommentForm = ({ id }) => {
       content: data.comment
     };
 
-    api.comments.add(comment);
-    console.log(comment);
+    add(comment);
     clear();
   };
 
@@ -103,7 +96,9 @@ const CommentForm = ({ id }) => {
 };
 
 CommentForm.propTypes = {
-  id: PropTypes.string
+  id: PropTypes.string.isRequired,
+  users: PropTypes.array.isRequired,
+  add: PropTypes.func
 };
 
 export default CommentForm;

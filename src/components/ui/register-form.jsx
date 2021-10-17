@@ -23,11 +23,6 @@ const RegisterForm = () => {
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
     api.qualities.fetchAll().then((data) => setQualities(data));
-
-    return () => {
-      setProfessions();
-      setQualities({});
-    };
   }, []);
 
   useEffect(() => {

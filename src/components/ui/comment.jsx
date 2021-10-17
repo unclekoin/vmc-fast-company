@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import api from "../../api";
 import formatDate from "../../utils/format-date";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, remove }) => {
   const { _id, author, date, content } = comment;
   return (
     <div className="bg-light card-body mb-3">
@@ -28,8 +27,8 @@ const Comment = ({ comment }) => {
                     <span className="me-1">{author}</span>
                     <span className="small">| {formatDate(date)}</span>
                   </div>
-                  <button className="btn btn-sm text-primary d-flex align-items-center">
-                    <i onClick={() => api.comments.remove(_id)} className="bi bi-x-lg"></i>
+                  <button onClick={() => remove(_id)} className="btn btn-sm text-primary d-flex align-items-center">
+                    <i className="bi bi-x-lg"></i>
                   </button>
                 </div>
                 <p className="small mb-0 pe-4">
@@ -45,7 +44,8 @@ const Comment = ({ comment }) => {
 };
 
 Comment.propTypes = {
-  comment: PropTypes.object
+  comment: PropTypes.object.isRequired,
+  remove: PropTypes.func.isRequired
 };
 
 export default Comment;

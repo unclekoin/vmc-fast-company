@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import api from "../../api";
 import QualitiesList from "./qualities/qualities-list";
 import CommentForm from "./comment-form";
 import Comments from "./comments";
+import Spinner from "../common/spinner";
 
 const UserCard = ({ user }) => {
+  const [users, setUsers] = useState();
+  const [comments, setComments] = useState();
   const { _id, name, profession, rate, completedMeetings, qualities } = user;
+
+  useEffect(() => {
+    api.users.fetchAll().then((data) => setUsers(data));
+    api.comments.fetchCommentsForUser(_id).then((data) => setComments(data));
+  }, []);
+
+  const addComment = (comment) => {
+    api.comments.add(comment);
+    api.comments.fetchCommentsForUser(_id).then((data) => setComments(data));
+  };
+
+  const removeComment = (id) => {
+    api.comments.remove(id);
+    api.comments.fetchCommentsForUser(_id).then((data) => setComments(data));
+  };
 
   return (
     <div className="row gutters-sm">
@@ -67,8 +86,8 @@ const UserCard = ({ user }) => {
         </div>
       </div>
       <div className="col-md-8">
-        <CommentForm id={_id} />
-        <Comments id={_id} />
+        {users ? <CommentForm id={_id} users={users} add={addComment} /> : <Spinner />}
+        { users && comments ? <Comments id={_id} users={users} comments={comments} remove={removeComment} /> : <Spinner />}
       </div>
     </div>
   );

@@ -44,6 +44,8 @@ const formatDate = (date) => {
     return `${min} ${formatPhrase(min)} назад`;
   } else if (diff < 8.64e7) {
     return `${addZero(hours)}:${addZero(min)}`;
+  } else if (diff < 3.154e10) {
+    return `${addZero(day)} ${getMonth(month)}`;
   } else {
     return `${addZero(day)} ${getMonth(month)} ${year} года`;
   }
