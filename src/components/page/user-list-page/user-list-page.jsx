@@ -13,20 +13,16 @@ import SearchPanel from "../../common/search-panel";
 const UserListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 8;
 
   const [users, setUsers] = useState();
-  const [userSearch, setUserSearch] = useState("");
 
   useEffect(() => {
     api.users.fetchAll().then((data) => setUsers(data));
   }, []);
-
-  useEffect(() => {
-    if (userSearch) clearFilter();
-  }, [userSearch]);
 
   const handleDelete = (userId) => {
     setUsers((state) => state.filter(({ _id }) => _id !== userId));
@@ -45,12 +41,19 @@ const UserListPage = () => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedProf]);
+  }, [selectedProf, searchQuery]);
 
   const handleProfessionSelect = (item) => {
+    setSearchQuery("");
     setSelectedProf(item);
-    setUserSearch("");
   };
+
+  const handleSearchQuery = ({ target }) => {
+    setSelectedProf();
+    setSearchQuery(target.value);
+  };
+
+  console.log(selectedProf);
 
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
@@ -60,23 +63,20 @@ const UserListPage = () => {
     setSortBy(item);
   };
 
-  const handleSearch = ({ target }) => {
-    setUserSearch(target.value);
-  };
-
   const clearFilter = () => {
     setSelectedProf();
+    setSearchQuery("");
   };
 
   if (users) {
-    const filtredUsers = selectedProf
-      ? users.filter(
-        (user) =>
-          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+    const filtredUsers = searchQuery
+      ? users.filter((user) =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
-      : userSearch
-        ? users.filter((user) =>
-          user.name.toLowerCase().includes(userSearch.toLowerCase())
+      : selectedProf
+        ? users.filter(
+          (user) =>
+            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
         )
         : users;
 
@@ -106,7 +106,7 @@ const UserListPage = () => {
         )}
         <div>
           <SearchStatus length={length} />
-          <SearchPanel value={userSearch} onChange={handleSearch} />
+          <SearchPanel value={searchQuery} onChange={handleSearchQuery} />
           <div className="d-flex flex-column">
             {!!length && (
               <UsersTable
