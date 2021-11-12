@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({ label, type, name, value, onChange, error, ...rest }) => {
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -22,6 +22,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
           id={name}
           name={name}
           value={value}
+          {...rest}
         />
         {type === "password" && (
           <button

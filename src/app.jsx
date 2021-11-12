@@ -1,9 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import NavBar from "./components/ui/navbar";
 import Users from "./layouts/users";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
+import { ProfessionProvider } from "./hooks/use-profession";
 
 const App = () => {
   return (
@@ -11,16 +13,13 @@ const App = () => {
       <NavBar />
       <div className="container">
         <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/users/:userId?/:edit?">
-            <Users />
-          </Route>
-          <Route path="/login/:type?">
-            <Login />
-          </Route>
+          <ProfessionProvider>
+            <Route path="/users/:userId?/:edit?" component={Users} />
+            <Route path="/login/:type?" component={Login} />
+          </ProfessionProvider>
+          <Route path="/" component={Main} />
         </Switch>
+        <ToastContainer />
       </div>
     </>
   );

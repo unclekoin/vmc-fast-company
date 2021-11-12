@@ -9,6 +9,7 @@ import SearchStatus from "../../ui/search/search-status";
 import _ from "lodash";
 import Spinner from "../../common/spinner";
 import SearchPanel from "../../common/search-panel";
+import { useUser } from "../../../hooks/use-users";
 
 const UserListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,21 +19,20 @@ const UserListPage = () => {
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 8;
 
-  const [users, setUsers] = useState();
-
-  useEffect(() => {
-    api.users.fetchAll().then((data) => setUsers(data));
-  }, []);
+  const { users } = useUser();
+  console.log(users);
 
   const handleDelete = (userId) => {
-    setUsers((state) => state.filter(({ _id }) => _id !== userId));
+    // setUsers((state) => state.filter(({ _id }) => _id !== userId));
+    console.log(userId);
   };
 
-  const hadnleToggleBookMark = (userId) => {
-    const newUsers = [...users];
-    const index = newUsers.findIndex((user) => user._id === userId);
-    newUsers[index].bookmark = !newUsers[index].bookmark;
-    setUsers(newUsers);
+  const handleToggleBookMark = (userId) => {
+    const newArray = [...users];
+    const index = newArray.findIndex((user) => user._id === userId);
+    newArray[index].bookmark = !newArray[index].bookmark;
+    // setUsers(newArray);
+    console.log(newArray);
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const UserListPage = () => {
     setCurrentPage(pageIndex);
   };
 
-  const handeleSort = (item) => {
+  const handleSort = (item) => {
     setSortBy(item);
   };
 
@@ -67,7 +67,7 @@ const UserListPage = () => {
   };
 
   if (users) {
-    const filtredUsers = searchQuery
+    const filteredUsers = searchQuery
       ? users.filter((user) =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
@@ -78,9 +78,9 @@ const UserListPage = () => {
         )
         : users;
 
-    const length = filtredUsers.length;
+    const length = filteredUsers.length;
 
-    const sortedUsers = _.orderBy(filtredUsers, [sortBy.path], [sortBy.order]);
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
 
     const usersCrop = paginate(sortedUsers, currentPage, pageSize);
 
@@ -110,9 +110,9 @@ const UserListPage = () => {
               <UsersTable
                 users={usersCrop}
                 onDelete={handleDelete}
-                onToggeleBookMark={hadnleToggleBookMark}
+                onToggleBookMark={handleToggleBookMark}
                 selectedSort={sortBy}
-                onSort={handeleSort}
+                onSort={handleSort}
               />
             )}
             <div className="d-flex justify-content-center">

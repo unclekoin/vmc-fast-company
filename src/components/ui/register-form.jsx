@@ -92,6 +92,7 @@ const RegisterForm = () => {
         value={data.email}
         onChange={handleChange}
         error={errors.email}
+        autoFocus
       />
       <TextField
         label="Пароль"
