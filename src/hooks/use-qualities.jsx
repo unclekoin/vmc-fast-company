@@ -1,21 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
-import userService from "../services/user.service";
+import qualityService from "../services/quality.service";
 
-const UserContext = React.createContext();
+const QualityContext = React.createContext();
 
-export const useUser = () => {
-  return useContext(UserContext);
+export const useQualities = () => {
+  return useContext(QualityContext);
 };
 
-const UserProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
+export const QualityProvider = ({ children }) => {
+  const [qualities, setQualities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getUsers();
+    getQualitiesList();
   }, []);
 
   useEffect(() => {
@@ -31,24 +31,27 @@ const UserProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  async function getUsers() {
+  async function getQualitiesList() {
     try {
-      const { content } = await userService.get();
-      setUsers(content);
+      const { content } = await qualityService.get();
+      setQualities(content);
       setIsLoading(false);
     } catch (error) {
       errorCatcher(error);
     }
   }
+
+  const getQuality = (ids) => {
+    return qualities.filter((quality) => ids.includes(quality._id));
+  };
+
   return (
-    <UserContext.Provider value={{ users }}>
-      {!isLoading ? children : <div>Loading...</div>}
-    </UserContext.Provider>
+    <QualityContext.Provider value={{ isLoading, getQuality }}>
+      {children}
+    </QualityContext.Provider>
   );
 };
 
-UserProvider.propTypes = {
+QualityProvider.propTypes = {
   children: PropTypes.node
 };
-
-export default UserProvider;

@@ -10,10 +10,9 @@ export const useProfessions = () => {
 };
 
 export const ProfessionProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [professions, setProfessions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(professions);
 
   useEffect(() => {
     getProfessionsList();
@@ -43,7 +42,7 @@ export const ProfessionProvider = ({ children }) => {
   }
 
   const getProfession = (id) => {
-    return professions.find((p) => p._id === id);
+    return professions.find((profession) => profession._id === id);
   };
 
   return (
@@ -54,8 +53,5 @@ export const ProfessionProvider = ({ children }) => {
 };
 
 ProfessionProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf[PropTypes.node],
-    PropTypes.node
-  ])
+  children: PropTypes.node
 };

@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const BookMark = ({ onToggeleBookMark, id, status }) => {
+const BookMark = ({ onToggleBookMark, id, status }) => {
   let classes = "bi bi-bookmark";
   classes = status ? classes + "-fill" : classes;
 
   return (
-    <span onClick={() => onToggeleBookMark(id)} className="fs-4 text-danger" role="button">
+    <span onClick={() => onToggleBookMark(id)} className="fs-4 text-danger" role="button">
       <i className={classes} />
     </span>
   );
 };
 
 BookMark.propTypes = {
-  onToggeleBookMark: PropTypes.func.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   status: PropTypes.bool
 };
