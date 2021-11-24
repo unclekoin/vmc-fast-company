@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import api from "../../api";
 import { validator } from "../../utils/validator";
+import { useQualities } from "../../hooks/use-qualities";
+import { useProfessions } from "../../hooks/use-profession";
+import { useAuth } from "../../hooks/use-auth";
 import TextField from "../common/form/text-field";
 import SelectField from "../common/form/select-field";
 import RadioField from "../common/form/radio-field";
-import MultiSelectField from "../common/form/multi-selct-field";
+import MultiSelectField from "../common/form/multi-select-field";
 import CheckboxField from "../common/form/checkbox-field";
 
 const RegisterForm = () => {
@@ -14,16 +16,17 @@ const RegisterForm = () => {
     profession: "",
     gender: "male",
     qualities: [],
-    licence: false
+    license: false
   });
-  const [qualities, setQualities] = useState({});
-  const [professions, setProfessions] = useState();
-  const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data));
-    api.qualities.fetchAll().then((data) => setQualities(data));
-  }, []);
+  const { signUp } = useAuth();
+  const { qualities } = useQualities();
+  const qualitiesList = qualities.map((quality) => ({
+    label: quality.name,
+    value: quality._id
+  }));
+  const { professions } = useProfessions();
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     validate();
@@ -39,7 +42,7 @@ const RegisterForm = () => {
         message: "Электронная почта обязательна для заполнения"
       },
       isEmail: {
-        message: "Email введен не корректно"
+        message: "Email введен некорректно"
       }
     },
     password: {
@@ -59,12 +62,13 @@ const RegisterForm = () => {
     },
     profession: {
       isRequired: {
-        message: "Пoле выбора профессии обязателено для заполнения"
+        message: "Поле выбора профессии обязательно для заполнения"
       }
     },
-    licence: {
+    license: {
       isRequired: {
-        message: "Вы не можете использовать сервис без подтверждения лицензионного соглащения"
+        message:
+          "Вы не можете использовать сервис без подтверждения лицензионного соглашения"
       }
     }
   };
@@ -81,7 +85,12 @@ const RegisterForm = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
-    console.log(data);
+    const modifiedData = {
+      ...data,
+      qualities: data.qualities.map((quality) => quality.value)
+    };
+    console.log(modifiedData);
+    signUp(modifiedData);
   };
 
   return (
@@ -126,16 +135,19 @@ const RegisterForm = () => {
         name="qualities"
         label="Выберите качества"
         defaultOption="Выбрать..."
-        options={qualities}
+        options={qualitiesList}
         onChange={handleChange}
       />
       <CheckboxField
         onChange={handleChange}
-        value={data.licence}
-        name="licence"
-        error={errors.licence}
+        value={data.license}
+        name="license"
+        error={errors.license}
       >
-        Подтвердить <a className="text-decoration-none" href="/">лицензионное соглашение</a>
+        Подтвердить{" "}
+        <a className="text-decoration-none" href="/">
+          лицензионное соглашение
+        </a>
       </CheckboxField>
       <button
         type="submit"

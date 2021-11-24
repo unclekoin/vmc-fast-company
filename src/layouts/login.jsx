@@ -28,7 +28,7 @@ const Login = () => {
             <h3 className="mb-4 text-center">Войти в систему</h3>
             <LoginForm />
             <p className="py-2">Еще нет аккаунта?
-              <a className="text-primary text-decoration-none" onClick={toggleFormType} role="button"> Зарегестрироваться</a>
+              <a className="text-primary text-decoration-none" onClick={toggleFormType} role="button"> Зарегистрироваться</a>
             </p>
           </>}
       </div>

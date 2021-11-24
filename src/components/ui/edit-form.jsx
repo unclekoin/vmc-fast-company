@@ -6,7 +6,7 @@ import { validator } from "../../utils/validator";
 import TextField from "../common/form/text-field";
 import SelectField from "../common/form/select-field";
 import RadioField from "../common/form/radio-field";
-import MultiSelectField from "../common/form/multi-selct-field";
+import MultiSelectField from "../common/form/multi-select-field";
 
 const EditForm = ({ user }) => {
   const history = useHistory();

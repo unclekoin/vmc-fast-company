@@ -7,23 +7,26 @@ import Main from "./layouts/main";
 import Login from "./layouts/login";
 import { ProfessionProvider } from "./hooks/use-profession";
 import { QualityProvider } from "./hooks/use-qualities";
+import AuthProvider from "./hooks/use-auth";
 
 const App = () => {
   return (
     <>
-      <NavBar />
-      <div className="container">
-        <ProfessionProvider>
-          <QualityProvider>
-            <Switch>
-              <Route path="/users/:userId?/:edit?" component={Users} />
-              <Route path="/login/:type?" component={Login} />
-              <Route path="/" component={Main} />
-            </Switch>
-          </QualityProvider>
-        </ProfessionProvider>
-        <ToastContainer />
-      </div>
+      <AuthProvider>
+        <NavBar />
+        <div className="container">
+          <ProfessionProvider>
+            <QualityProvider>
+              <Switch>
+                <Route path="/users/:userId?/:edit?" component={Users} />
+                <Route path="/login/:type?" component={Login} />
+                <Route path="/" component={Main} />
+              </Switch>
+            </QualityProvider>
+          </ProfessionProvider>
+        </div>
+      </AuthProvider>
+      <ToastContainer />
     </>
   );
 };
