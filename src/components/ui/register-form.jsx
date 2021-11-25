@@ -8,8 +8,10 @@ import SelectField from "../common/form/select-field";
 import RadioField from "../common/form/radio-field";
 import MultiSelectField from "../common/form/multi-select-field";
 import CheckboxField from "../common/form/checkbox-field";
+import { useHistory } from "react-router-dom";
 
 const RegisterForm = () => {
+  const history = useHistory();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -81,7 +83,7 @@ const RegisterForm = () => {
 
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
@@ -89,8 +91,12 @@ const RegisterForm = () => {
       ...data,
       qualities: data.qualities.map((quality) => quality.value)
     };
-    console.log(modifiedData);
-    signUp(modifiedData);
+    try {
+      await signUp(modifiedData);
+      history.push("/");
+    } catch (error) {
+      setErrors(error);
+    }
   };
 
   return (
