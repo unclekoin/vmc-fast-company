@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { toast } from "react-toastify";
 import userService from "../services/user.service";
 import { setTokens } from "../services/localstorage.service";
 
@@ -52,7 +51,6 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (error) {
-      toast.error(`${error.message}. Status: ${error.status}`);
       setError(null);
     }
   }, [error]);

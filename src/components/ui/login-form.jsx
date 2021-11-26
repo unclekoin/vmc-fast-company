@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import TextField from "../common/form/text-field";
 import { validator } from "../../utils/validator";
 import CheckboxField from "../common/form/checkbox-field";
+import { useLogin } from "../../hooks/use-login";
 
 const LoginForm = () => {
+  const history = useHistory();
+  const { signIn } = useLogin();
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({ email: "", password: "", stayOn: false });
 
@@ -27,16 +31,6 @@ const LoginForm = () => {
     password: {
       isRequired: {
         message: "Пароль обязателен для заполнения"
-      },
-      isCapitalSymbol: {
-        message: "Пароль должен содержать хотя бы одну заглавную букву"
-      },
-      isContainDigit: {
-        message: "Пароль должен содержать хотя бы одну цифру"
-      },
-      min: {
-        message: "Пароль должен содержать не менее 8 символов",
-        value: 8
       }
     }
   };
@@ -49,11 +43,16 @@ const LoginForm = () => {
 
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
-    console.log(data);
+    try {
+      await signIn(data);
+      history.push("/");
+    } catch (error) {
+      setErrors(error);
+    }
   };
 
   return (

@@ -8,6 +8,7 @@ import Login from "./layouts/login";
 import { ProfessionProvider } from "./hooks/use-profession";
 import { QualityProvider } from "./hooks/use-qualities";
 import AuthProvider from "./hooks/use-auth";
+import LoginProvider from "./hooks/use-login";
 
 const App = () => {
   return (
@@ -17,11 +18,13 @@ const App = () => {
         <div className="container">
           <ProfessionProvider>
             <QualityProvider>
-              <Switch>
-                <Route path="/users/:userId?/:edit?" component={Users} />
-                <Route path="/login/:type?" component={Login} />
-                <Route path="/" component={Main} />
-              </Switch>
+              <LoginProvider>
+                <Switch>
+                  <Route path="/users/:userId?/:edit?" component={Users} />
+                  <Route path="/login/:type?" component={Login} />
+                  <Route path="/" component={Main} />
+                </Switch>
+              </LoginProvider>
             </QualityProvider>
           </ProfessionProvider>
         </div>
