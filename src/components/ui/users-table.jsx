@@ -14,7 +14,6 @@ const UsersTable = ({
   selectedSort
 }) => {
   const columns = {
-    // name: { path: "name", name: "Имя" },
     name: {
       name: "Имя",
       path: "name",

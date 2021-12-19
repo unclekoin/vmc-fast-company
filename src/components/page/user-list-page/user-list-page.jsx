@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../api";
-import PropTypes from "prop-types";
 import UsersTable from "../../ui/users-table";
 import Pagination from "../../common/pagination";
 import GroupList from "../../common/group-list";
@@ -128,13 +127,6 @@ const UserListPage = () => {
     );
   }
   return <Spinner />;
-};
-
-UserListPage.propTypes = {
-  users: PropTypes.array,
-  onDelete: PropTypes.func,
-  onToggeleBookMark: PropTypes.func,
-  getData: PropTypes.func
 };
 
 export default UserListPage;

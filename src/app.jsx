@@ -7,8 +7,8 @@ import Main from "./layouts/main";
 import Login from "./layouts/login";
 import { ProfessionProvider } from "./hooks/use-profession";
 import { QualityProvider } from "./hooks/use-qualities";
-import AuthProvider from "./hooks/use-auth";
-import LoginProvider from "./hooks/use-login";
+import { AuthProvider } from "./hooks/use-auth";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -18,13 +18,11 @@ const App = () => {
         <div className="container">
           <ProfessionProvider>
             <QualityProvider>
-              <LoginProvider>
-                <Switch>
-                  <Route path="/users/:userId?/:edit?" component={Users} />
-                  <Route path="/login/:type?" component={Login} />
-                  <Route path="/" component={Main} />
-                </Switch>
-              </LoginProvider>
+              <Switch>
+                <Route path="/users/:userId?/:edit?" component={Users} />
+                <Route path="/login/:type?" component={Login} />
+                <Route path="/" component={Main} />
+              </Switch>
             </QualityProvider>
           </ProfessionProvider>
         </div>

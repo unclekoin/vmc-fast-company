@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 const RegisterForm = () => {
   const history = useHistory();
   const [data, setData] = useState({
+    name: "",
     email: "",
     password: "",
     profession: "",
@@ -39,6 +40,15 @@ const RegisterForm = () => {
   };
 
   const validatorConfig = {
+    name: {
+      isRequired: {
+        message: "Имя обязательно для заполнения"
+      },
+      min: {
+        message: "Имя должно содержать не менее 3 символов",
+        value: 3
+      }
+    },
     email: {
       isRequired: {
         message: "Электронная почта обязательна для заполнения"
@@ -102,7 +112,15 @@ const RegisterForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        label="Email"
+        label="Имя"
+        name="name"
+        value={data.name}
+        onChange={handleChange}
+        error={errors.name}
+        autoFocus
+      />
+      <TextField
+        label="Электронная почта"
         name="email"
         value={data.email}
         onChange={handleChange}

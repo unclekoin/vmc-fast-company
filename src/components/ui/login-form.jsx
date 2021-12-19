@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 import TextField from "../common/form/text-field";
 import { validator } from "../../utils/validator";
 import CheckboxField from "../common/form/checkbox-field";
-import { useLogin } from "../../hooks/use-login";
+import { useAuth } from "../../hooks/use-auth";
 
 const LoginForm = () => {
   const history = useHistory();
-  const { signIn } = useLogin();
+  const { logIn } = useAuth();
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({ email: "", password: "", stayOn: false });
 
@@ -48,7 +48,7 @@ const LoginForm = () => {
     const isValid = validate();
     if (!isValid) return;
     try {
-      await signIn(data);
+      await logIn(data);
       history.push("/");
     } catch (error) {
       setErrors(error);
