@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import api from "../../../api";
 import UserCard from "../../ui/user-card";
 import Spinner from "../../common/spinner";
+import { useUser } from "../../../hooks/use-users";
 
 const UserPage = () => {
+  const { getUserById } = useUser();
   const { userId } = useParams();
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    api.users.getById(userId).then((user) => setUser(user));
-  }, []);
+  const user = getUserById(userId);
 
   return <>{user ? <UserCard user={user} /> : <Spinner />}</>;
 };

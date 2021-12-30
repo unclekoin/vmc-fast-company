@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import userService from "../services/user.service";
+import Spinner from "../components/common/spinner";
 
 const UserContext = React.createContext();
 
@@ -37,12 +38,18 @@ const UserProvider = ({ children }) => {
       setUsers(content);
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       errorCatcher(error);
     }
   }
+
+  function getUserById(userId) {
+    return users.find((user) => user._id === userId);
+  }
+
   return (
-    <UserContext.Provider value={{ users }}>
-      {!isLoading ? children : <div>Loading...</div>}
+    <UserContext.Provider value={{ users, getUserById }}>
+      {!isLoading ? children : <Spinner />}
     </UserContext.Provider>
   );
 };

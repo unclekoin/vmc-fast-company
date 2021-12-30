@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
 import userService from "../services/user.service";
+import Spinner from "../components/common/spinner";
 import localStorageService, {
   setTokens
 } from "../services/localstorage.service";
@@ -19,8 +21,10 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState();
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const history = useHistory();
 
   async function logIn({ email, password }) {
     try {
@@ -30,7 +34,7 @@ export const AuthProvider = ({ children }) => {
         returnSecureToken: true
       });
       setTokens(data);
-      getUserData();
+      await getUserData();
     } catch (error) {
       errorCatcher(error);
       const { code, message } = error.response.data.error;
@@ -39,13 +43,18 @@ export const AuthProvider = ({ children }) => {
         switch (message) {
         case "INVALID_PASSWORD":
           throw new Error("Email или пароль введены некорректно");
-
         default:
           throw new Error("Слишком много попыток входа. Попробуйте позднее");
         }
       }
     }
   }
+
+  const LogOut = () => {
+    localStorageService.removeAuthData();
+    setCurrentUser(null);
+    history.push("/");
+  };
 
   const randomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -64,6 +73,9 @@ export const AuthProvider = ({ children }) => {
         email,
         rate: randomInt(1, 5),
         completedMeetings: randomInt(0, 200),
+        image: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1)
+          .toString(36)
+          .substring(7)}.svg`,
         ...rest
       });
     } catch (error) {
@@ -95,12 +107,16 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(content);
     } catch (error) {
       errorCatcher(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
     if (localStorageService.getAccessToken()) {
       getUserData();
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -116,8 +132,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signUp, logIn, currentUser }}>
-      {children}
+    <AuthContext.Provider value={{ signUp, logIn, currentUser, LogOut }}>
+      {!isLoading ? children : <Spinner />}
     </AuthContext.Provider>
   );
 };

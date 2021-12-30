@@ -8,7 +8,6 @@ import Name from "./name";
 
 const UsersTable = ({
   users,
-  onDelete,
   onToggleBookMark,
   onSort,
   selectedSort
@@ -39,13 +38,6 @@ const UsersTable = ({
           status={user.bookmark}
         />
       )
-    },
-    delete: {
-      component: (user) => (
-        <button className="btn btn-danger" onClick={() => onDelete(user._id)}>
-          Удалить
-        </button>
-      )
     }
   };
 
@@ -64,7 +56,6 @@ const UsersTable = ({
 
 UsersTable.propTypes = {
   users: PropTypes.array.isRequired,
-  onDelete: PropTypes.func.isRequired,
   onToggleBookMark: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   selectedSort: PropTypes.object.isRequired

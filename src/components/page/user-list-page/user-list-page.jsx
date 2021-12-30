@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import api from "../../../api";
 import UsersTable from "../../ui/users-table";
 import Pagination from "../../common/pagination";
 import GroupList from "../../common/group-list";
@@ -9,15 +8,17 @@ import _ from "lodash";
 import Spinner from "../../common/spinner";
 import SearchPanel from "../../common/search-panel";
 import { useUser } from "../../../hooks/use-users";
+import { useAuth } from "../../../hooks/use-auth";
+import { useProfessions } from "../../../hooks/use-profession";
 
 const UserListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [professions, setProfessions] = useState();
+  const { currentUser } = useAuth();
+  const { isLoading: professionsLoading, professions } = useProfessions();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const pageSize = 8;
-
   const { users } = useUser();
 
   const handleDelete = (userId) => {
@@ -32,10 +33,6 @@ const UserListPage = () => {
     // setUsers(newArray);
     console.log(newArray);
   };
-
-  useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data));
-  }, []);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -65,16 +62,22 @@ const UserListPage = () => {
   };
 
   if (users) {
-    const filteredUsers = searchQuery
-      ? users.filter((user) =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      : selectedProf
-        ? users.filter(
-          (user) =>
-            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+    const filterUsers = (data) => {
+      const filteredUsers = searchQuery
+        ? data.filter((user) =>
+          user.name.toLowerCase().includes(searchQuery.toLowerCase())
         )
-        : users;
+        : selectedProf
+          ? data.filter(
+            (user) =>
+              JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+          )
+          : data;
+
+      return filteredUsers.filter((user) => user._id !== currentUser._id);
+    };
+
+    const filteredUsers = filterUsers(users);
 
     const length = filteredUsers.length;
 
@@ -88,7 +91,7 @@ const UserListPage = () => {
 
     return (
       <div className="d-flex align-items-start">
-        {professions && (
+        {professions && !professionsLoading && (
           <div className="d-flex flex-column flex-shrink-0 pe-4">
             <GroupList
               items={professions}
